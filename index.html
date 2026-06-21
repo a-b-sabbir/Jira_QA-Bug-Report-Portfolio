@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Portfolio — Md. Sabbir Hossain</title>
+  <style>
+    :root {
+      --bg:       #060f18;
+      --navy:     #0b1d2e;
+      --card:     #0d2137;
+      --border:   rgba(0,180,216,0.18);
+      --accent:   #00b4d8;
+      --accent2:  #0077a8;
+      --white:    #f0f4f8;
+      --muted:    #7a9ab0;
+      --open:     #22c55e;
+      --resolved: #f59e0b;
+      --closed:   #6366f1;
+      --tbr:      #ec4899;
+      --font:     'Segoe UI', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 36px 48px 28px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .h-left .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .h-left h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .h-left h1 span { color: var(--accent); }
+
+    .h-left .sub {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .h-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .h-right a {
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .h-right a:hover { text-decoration: underline; }
+
+    .h-right .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 120px;
+      padding: 20px 28px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat .num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat .label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── PROJECT TABS ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      padding: 0 48px;
+    }
+
+    .tab {
+      padding: 14px 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+
+    .tab:hover { color: var(--white); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── MAIN ── */
+    main { padding: 32px 48px 64px; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 14px 9px 36px;
+      color: var(--white);
+      font-size: 0.8rem;
+      font-family: var(--font);
+      outline: none;
+    }
+
+    .search-wrap input::placeholder { color: var(--muted); }
+    .search-wrap input:focus { border-color: var(--accent); }
+
+    .search-wrap .ico {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .filter-select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 12px;
+      color: var(--white);
+      font-size: 0.78rem;
+      font-family: var(--font);
+      cursor: pointer;
+      outline: none;
+    }
+
+    .filter-select:focus { border-color: var(--accent); }
+
+    .result-count {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    thead tr {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th:hover { color: var(--accent); }
+    th .sort-arrow { margin-left: 4px; opacity: 0.4; }
+    th.sorted .sort-arrow { opacity: 1; color: var(--accent); }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(0,180,216,0.07);
+      transition: background 0.1s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(0,180,216,0.04); }
+
+    td {
+      padding: 11px 16px;
+      vertical-align: top;
+      line-height: 1.4;
+    }
+
+    .bug-id {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .bug-title {
+      color: var(--white);
+      max-width: 420px;
+    }
+
+    .bug-module {
+      color: var(--muted);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .priority-badge, .status-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .priority-major   { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .priority-minor   { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+    .priority-critical{ background: rgba(220,38,38,0.2);   color: #fca5a5; border: 1px solid rgba(220,38,38,0.4); }
+
+    .status-open     { background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .status-closed   { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+    .status-resolved { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+    .status-tbr      { background: rgba(236,72,153,0.12); color: #f9a8d4; border: 1px solid rgba(236,72,153,0.3); }
+
+    .date-cell { color: var(--muted); font-size: 0.7rem; white-space: nowrap; }
+
+    /* ── EMPTY ── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .empty .ico { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4; }
+    .empty p { font-size: 0.85rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p { font-size: 0.7rem; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      header, main, footer { padding-left: 20px; padding-right: 20px; }
+      .tabs { padding: 0 20px; }
+      .stat { padding: 16px 18px; }
+      .stat .num { font-size: 1.4rem; }
+      h1 { font-size: 1.4rem; }
+      .h-right { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <div class="eyebrow">QA Bug Report Portfolio</div>
+    <h1>Md. Sabbir <span>Hossain</span></h1>
+    <div class="sub">Junior QA Engineer · A1QA Software Testing · Dhaka, Bangladesh</div>
+  </div>
+  <div class="h-right">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+      <span class="tool-badge">🐛 Jira · QATC</span>
+      <span class="tool-badge">📊 Manual Testing</span>
+      <span class="tool-badge">📋 Excel Export</span>
+    </div>
+    <a href="https://github.com/a-b-sabbir" target="_blank">↗ github.com/a-b-sabbir</a>
+    <a href="https://linkedin.com/in/a-b-sabbir" target="_blank">↗ linkedin.com/in/a-b-sabbir</a>
+  </div>
+</header>
+
+<!-- Stats bar populated by JS -->
+<div class="stats-bar" id="statsBar"></div>
+
+<!-- Project tabs -->
+<div class="tabs" id="tabsContainer"></div>
+
+<main>
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="ico">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search bug title or ID…" />
+    </div>
+    <select class="filter-select" id="statusFilter">
+      <option value="">All Statuses</option>
+      <option value="Open">Open</option>
+      <option value="Closed">Closed</option>
+      <option value="Resolved">Resolved</option>
+      <option value="To Be Reformulated">To Be Reformulated</option>
+    </select>
+    <select class="filter-select" id="priorityFilter">
+      <option value="">All Priorities</option>
+      <option value="Major">Major</option>
+      <option value="Minor">Minor</option>
+      <option value="Critical">Critical</option>
+    </select>
+    <span class="result-count" id="resultCount"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-col="id">Bug ID <span class="sort-arrow">↕</span></th>
+          <th data-col="title">Summary <span class="sort-arrow">↕</span></th>
+          <th data-col="module">Module <span class="sort-arrow">↕</span></th>
+          <th data-col="priority">Priority <span class="sort-arrow">↕</span></th>
+          <th data-col="status">Status <span class="sort-arrow">↕</span></th>
+          <th data-col="resolution">Resolution <span class="sort-arrow">↕</span></th>
+          <th data-col="date">Reported <span class="sort-arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="bugTableBody"></tbody>
+    </table>
+    <div class="empty" id="emptyState" style="display:none;">
+      <div class="ico">🔎</div>
+      <p>No bugs match your filter. Try a different search or status.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Reported by <strong>s13.hossain</strong> · Exported from Jira · Project: <strong>QATC</strong></p>
+  <p>Built for <a href="https://linkedin.com/in/a-b-sabbir" target="_blank">Md. Sabbir Hossain</a> — QA Portfolio</p>
+</footer>
+
+<script>
+// ── RAW DATA ──────────────────────────────────────────────────────────────────
+const rawBugs = [
+  // Voicemail
+  ["QATC-986876","Audio: Playback: Caller side cannot hear greeting playback during incoming call","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986855","Audio: Recipient: Loading shown indefinitely instead of asking permission after tapping 'Select a recipient'","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986854","Dashboard: No tooltip displayed for greeting, status creation or activation","Dashboard","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986853","Audio: Recipient: 'Recepient' spelling is displayed instead of 'Recipient'","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986852","Settings: 'Time before greeting' resets after navigating back","Settings","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986851","Audio: Title Edit: Title accepts special characters while editing an audio","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986850","Audio: Group: Multiple greetings can be saved to same group and time range simultaneously","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986848","Dashboard: Title: Long text wraps instead of showing ellipsis in dashboard view","Dashboard","Major","To Be Reformulated","","2026-02-18","Voicemail"],
+  ["QATC-986847","Dashboard: Playback: Audio progress bar not shown while audio is playing","Dashboard","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986846","Audio: Recipient: App crashes when back button is pressed while loading recipients","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986845","Audio: Repeat: Repetition cannot be fully turned off once selected","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986844","Recording: Discard icon does not match design","Recording","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986825","Recording: Progress bar is not visible during recording session","Recording","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986823","Help: Title bar does not update with page name","Help","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986819","Audio: Title Edit: Empty title can be saved while editing an audio","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986816","Audio: Playback: Stop action shows last paused position instead of 0:00","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986814","Audio: Group: Device contacts not shown while Gmail and SIM contacts are available","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986813","Audio: Deletion: No confirmation prompt displayed while deleting greeting or status","Audio","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986812","Help: No contact details or guidance for greetings and status","Help","Major","Open","","2026-02-18","Voicemail"],
+  ["QATC-986468","Recording: Time Picker: Invalid time range selection allowed from 2:00PM to 12:00PM","Recording","Major","To Be Reformulated","","2026-02-17","Voicemail"],
+  ["QATC-986467","Recording: Zero duration recording accepted and saved successfully","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986466","Playback: Multiple greetings play simultaneously causing overlapping sound","Playback","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986437","Recording: Identical names accepted for multiple greetings without restriction","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986436","Recording: New recording starts and captures from existing playback while existing playback continues in background","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986432","Recording: Recording runs only for 9 minutes before stopping automatically","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986345","Recording: 'Stoped' is displayed instead of 'Stopped' while creating new status","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986343","Settings: Activate Service: 'Purchase $2.99' element not triggering any action","Settings","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986341","Recording: Pause action ends recording instead of holding state while creating new greeting","Recording","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986340","Splash Screen: Permissions requested before displaying splash screen","Splash Screen","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986339","Settings: 'Time before greeting' does not display unit indication (seconds/minutes)","Settings","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986191","Dashboard: Playback: Recorded audio cannot be heard when all permissions are denied","Dashboard","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986190","Activate Service: 'Free for 2 weeks' element is clickable but does not proceed","Activate Service","Major","Open","","2026-02-17","Voicemail"],
+  ["QATC-986189","App Title: Installed app name displays 'GET PERSONAL' instead of 'Voicemail'","App Title","Major","Open","","2026-02-17","Voicemail"],
+  // Burgershop
+  ["QATC-985475","About Us: Our Core Values: One card not aligned in size with others","About Us","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985473","Menu Planner: Add Your Own Meal: Calories field does not display validation message for decimal input","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985469","Menu Planner: Add Your Own Meal: Meal is added successfully leaving Image URL field empty","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985453","Menu Planner: Add Your Own Meal: Input fields allow values outside defined validation rules","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985451","Menu Planner: Send Plan to Email: Email is not delivered after displaying success message","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985450","Menu UI: Add to Cart button: Button shows 'Added' but does not return to 'Add to Cart'","Menu UI","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985448","Menu UI: Add to Cart button: Clicking 'Add to Cart' button doesn't turn green for Burger items","Menu UI","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985446","Menu List: Contents not vertically aligned","Menu List","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985445","Menu Planner: Weekly Menu Planner: 'Tuesday' is displayed instead of 'Thursday'","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985432","Footer: Form: Form can be submitted leaving 'Your message' field empty","Footer","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985381","Menu List: Wok: 'Wok' Page fails to load when selected from menu","Menu List","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985380","Shopping Cart: UI shows instability when increasing or decreasing item quantity","Shopping Cart","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985378","Navigation: 'Home' redirects to same page as 'Burger Shop' instead of service info page","Navigation","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985377","Menu Planner: Add Your Own Meal: Edit and delete actions not available for added meals","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985376","Menu Planner: Add Your Own Meal: Validation message is displayed over other components","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985375","Menu Planner: Add Your Own Meal: Added meal disappears after page refresh","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985373","Shopping cart: Order amount exceeds $500 limit during checkout","Shopping Cart","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985372","Menu Planner: Send Plan to Email: Automatic scroll down after submission hides confirmation message","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985370","Menu Planner: Weekly Menu Planner: Bottom border is not fully displayed under each day card","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985369","Menu Planner: Available Meals: No visual gap between price and 'Add to Planner' button","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-985368","Menu Planner: Available Meals: Button label is displayed 'Add to Planner' instead of 'Add to Cart'","Menu Planner","Major","Open","","2026-01-28","Burgershop"],
+  ["QATC-984434","Menu Planner: Available Meals: 'Chicken Stir Fry' missing spiciness option in Available Meals","Menu Planner","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984433","Menu Planner: Available Meals: 'Veggie Pizza' missing size option in Available Meals","Menu Planner","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984432","Shopping Cart: Checkout: 'Phone' field accepts text and special characters instead of numeric input only","Shopping Cart","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984431","Menu Planner: Weight Loss Calculation: Calorie deficit formula uses '7070÷5' instead of '7000÷7'","Menu Planner","Major","Closed","Fixed","2026-01-21","Burgershop"],
+  ["QATC-984430","Menu Planner: BMR Calculation: Male formula uses '6.677×age' instead of '5.677×age'","Menu Planner","Major","Closed","Fixed","2026-01-21","Burgershop"],
+  ["QATC-984429","About Us: Our Story: Year '2015' is displayed in 'Our Story' section instead of '2010'","About Us","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984428","Shopping Cart: Add to Planner: 'Planner functionality unavailable' message appears after cancelling popup","Shopping Cart","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984427","Menu UI: Add to Cart button: 'Added' confirmation not displayed on clicking button for Sauces items","Menu UI","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984426","Menu UI: Add to Cart button: Clicking button turns green only for Burger items","Menu UI","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984425","Menu UI: 'Garlic Aioli' from the 'Sauces' menu list does not display image","Menu UI","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984424","Header: Active page tab does not show any visual highlight","Header","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984423","Authentication: Login does not support submitting form by pressing Enter key","Authentication","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984422","Authentication: Login fails after clearing site data and same email allows re-registration","Authentication","Major","Open","","2026-01-21","Burgershop"],
+  ["QATC-984316","Menu Planner: Weight Loss Calculator: 'Set Limit' button not aligned with calorie input field","Menu Planner","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984315","Footer: Form: Emails containing symbols or missing TLD are allowed","Footer","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984314","Contacts: Catering Services: Clicking 'Request Catering Info' redirects to a 'Not Found' page","Contacts","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984313","About Us: Clicking 'Order Online' scrolls the page to the top instead of redirecting","About Us","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984312","Contacts: 'Send Message' form submission redirects to 'Not Found' page","Contacts","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984306","Menu Planner: Weight Loss Calculator: Inputs containing '+' and '-' characters are accepted in numeric fields","Menu Planner","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984304","Meal Planner: Weekly Calorie Summary: 'Good' status is displayed when calorie value is 0","Menu Planner","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984303","Menu Planner: Weekly Calorie Summary: System displays 'Over limit!' even when calories equal the daily limit","Menu Planner","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984302","Responsive Layout: Elements overlap and misalign on reduced screen sizes","Responsive Layout","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984301","Shopping Cart: Cart items are displayed without their corresponding images","Shopping Cart","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984300","Shopping Cart: Item is not removed immediately on minus click","Shopping Cart","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984298","Menu Planner: Weight Loss Calculator: Mandatory fields not marked with asterisk","Menu Planner","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984297","About Us: Business hours displayed in 'About Us' page differ from those shown on 'Contacts' page","About Us","Major","Open","","2026-01-20","Burgershop"],
+  ["QATC-984067","Contacts: 'Get Directions' button does not trigger navigation","Contacts","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984066","Contacts: 'Send Email' button does not open default mail client","Contacts","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984041","Menu Planner: Weight Loss Calculator: No validation when target weight exceeds current weight","Menu Planner","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984035","Favicon: No favicon is displayed in the browser tab","Favicon","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984034","Checkout: Order submission does not complete after selecting payment method","Checkout","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984033","Shopping Cart: Cart panel does not open on adding items from Sauces page","Shopping Cart","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984031","Shopping Cart: Food items on the right side are covered by the cart panel","Shopping Cart","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984030","Shopping Cart: Kcal value at the top of the cart panel shows only the last added item","Shopping Cart","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984028","Menu List: Pizza: Size selection not working for pizza items","Menu List","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984027","Menu Planner: Weight Loss Calculator: Incorrect message shown for values below 1200 kcal/day","Menu Planner","Major","To Be Reformulated","","2026-01-19","Burgershop"],
+  ["QATC-984023","Navigation: Register button in header section of login form doesn't trigger","Navigation","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-984022","Footer: Footer section is not displayed on 'Sauces' page","Footer","Major","Resolved","Incomplete","2026-01-19","Burgershop"],
+  ["QATC-984019","Shopping Cart: Close icon not properly aligned if multiple items are added","Shopping Cart","Major","Open","","2026-01-19","Burgershop"],
+  ["QATC-983768","Shopping Cart: Kcal value increases by 100 after adding an item to cart","Shopping Cart","Major","Closed","Fixed Indirectly","2026-01-18","Burgershop"],
+  ["QATC-983767","Navigation: Login button opens register page after closing register page","Navigation","Major","Open","","2026-01-18","Burgershop"],
+  ["QATC-983766","Menu Planner: Weight Loss Calculator: 'Current Weight' field allows entering 1","Menu Planner","Major","Open","","2026-01-18","Burgershop"],
+  ["QATC-983765","Homepage: Unexpected '<' symbol displayed after menu list","Homepage","Major","Open","","2026-01-18","Burgershop"],
+  ["QATC-983759","Checkout: 'Close' icon not clickable on 'Complete your order' page","Checkout","Major","Open","","2026-01-18","Burgershop"],
+  ["QATC-983756","Checkout: Empty cart shows 'Cart is full!' on checkout","Checkout","Major","Open","","2026-01-18","Burgershop"],
+  ["QATC-983754","Shopping Cart: Clicking plus icon increases quantity by 2 instead of 1","Shopping Cart","Major","Closed","Fixed","2026-01-18","Burgershop"],
+  // GregOlsen Photostudio
+  ["QATC-981502","Header Navigation: Bio & Press: Clicking header title routes to Clients page instead of homepage","Header Navigation","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981376","Header Navigation Tab: Unable to navigate to Contact page from Lifestyle page","Header Navigation","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981363","Search Functionality: Search action reloads page without showing results or 'no result' message","Search","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981362","Booking Information Page: Email field accepts spaces, commas, and special chars without '@' and '.'","Booking","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981359","Book Session Page: Session Layout breaks upon opening developer tools","Book Session","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981357","Image Viewer: Image preview not maintaining center alignment on screen resize","Image Viewer","Major","Open","","2026-01-08","GregOlsen"],
+  ["QATC-981037","Booking Information Page: Phone input field allows non-numeric characters","Booking","Major","Open","","2026-01-07","GregOlsen"],
+  ["QATC-981035","Header Navigation: Active page tab is not highlighted when navigating to Sessions page","Header Navigation","Major","Open","","2026-01-07","GregOlsen"],
+  ["QATC-980927","Book Information Page: 'Continue to payment method' button is unaligned","Book Session","Major","Open","","2026-01-07","GregOlsen"],
+  ["QATC-980903","Book Information Page: Clicking 'Continue to payment method' returns 404 - Page not found","Book Session","Major","Open","","2026-01-07","GregOlsen"],
+  ["QATC-980833","Clients Page: Client profiles order does not match requirement document list","Clients","Major","Open","","2026-01-07","GregOlsen"],
+  ["QATC-980758","Book Information Page: 'Save this information for next time' checkbox is disabled","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980754","Book Information Page: 'Keep me up to date on news' checkbox is checked by default","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980751","Book Information Page: Company input field is set as required instead of optional","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980747","Book Information Page: Mini Outdoor Session displays Standard Session photo","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980740","Standard Session Booking: Additional Subject dropdown provides only None and 1-7 options","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980737","Mini Studio Session Booking: Additional Subject '6' cannot be selected from dropdown","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980725","Mini Studio Session Booking: Additional subject price counted as $50 instead of $55","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980722","Standard Session: Start price changes after clicking 'Book Now'","Book Session","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980646","Clients Page: Left and right gaps visible around client images","Clients","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980643","Clients Page: 'Kong Crossfit' client link opens in the same tab when clicked","Clients","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980639","Philanthropy Article: Final two testimonial paragraphs are not displayed","Article","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980632","Philanthropy Article: Misspelled words and '../images' text appear in the article","Article","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980631","Clients Page: Client 'Laser Performance' is not displayed","Clients","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980628","Clients Page: Lauren Lucia client image does not open external link","Clients","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980625","Clients Page: Page title is displayed 'Clients' instead of 'Clients Gallery'","Clients","Major","Open","","2026-01-06","GregOlsen"],
+  ["QATC-980553","Clients List: Images for Yasmine Ghaemi and Jennifer Harris are swapped","Clients","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980539","Client List: Caleb Colpitts client link redirects to another client page","Clients","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980536","Client List: Alex Ching client link redirects to another client page","Clients","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980517","Lifestyle Gallery: Multiple photos aren't opened if clicked on each photo in page 3","Gallery","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980515","Lifestyle Gallery: Photo number 7 is unavailable after paginating to page 5","Gallery","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980514","Portrait Gallery: Photo positions 5 and 6 swapped on page 3","Gallery","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980512","Portrait Gallery Image Viewer: Navigation labels display unknown language when hovered","Gallery","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980505","Header Title: Header title underline appears on Contact page only when hovered","Header","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980503","Bio & Press Page: Information about Greg's life and press articles is not displayed","Bio & Press","Major","Open","","2026-01-05","GregOlsen"],
+  ["QATC-980486","Favicon: Favicon does not represent Gregory Olson photostudio","Favicon","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980485","Footer Layout: Footer is not displayed on the Contact page","Footer","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980483","Console Log: Mixed Content warning appears in console","Console","Major","Resolved","FAD","2026-01-04","GregOlsen"],
+  ["QATC-980480","Footer Contact: Contact number is displayed wrong (transposed digits)","Footer","Major","Resolved","Duplicate","2026-01-04","GregOlsen"],
+  ["QATC-980477","Footer Email: Email address is not clickable","Footer","Major","Resolved","FAD","2026-01-04","GregOlsen"],
+  ["QATC-980475","Footer Layout: 'Adress' is displayed instead of 'Address'","Footer","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980473","Header Layout: Camera icon before header title is not displayed","Header","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980471","Header Search Field: Search field not visible due to black overlap on Book Session Page","Header","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980468","Header Layout: Header is not fixed and disappears when scrolling the page","Header","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980463","Motion Gallery: Page does not load when Motion option is selected from Work menu","Gallery","Major","Open","","2026-01-04","GregOlsen"],
+  ["QATC-980461","Header Navigation Tab: 'Sessions' is not displayed after routing to Contact page","Header Navigation","Major","Open","","2026-01-04","GregOlsen"],
+  // Forkify
+  ["QATC-980097","Bookmark Recipe: Re-bookmarked recipe moves to the bottom of the bookmarks list","Bookmark","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980091","Mobile Bookmark: Bookmarks menu stays open after selecting a recipe","Bookmark","Major","Resolved","Cannot Reproduce","2026-01-01","Forkify"],
+  ["QATC-980081","Mobile Bookmark: Bookmarks dropdown does not display more than 9 recipes on homepage","Bookmark","Major","Resolved","Cannot Reproduce","2026-01-01","Forkify"],
+  ["QATC-980079","Update Recipe Ingredients: Recipe Servings Cannot Be Saved After Adjustment","Recipe","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980075","Edit Recipe: Users cannot edit any recipe from the application once created","Recipe","Major","Resolved","Duplicate","2026-01-01","Forkify"],
+  ["QATC-980074","Bookmark Recipe: Homepage Bookmarks are displayed in ascending order (oldest first)","Bookmark","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980073","Recipe details page: Ingredient numbers change dynamically when servings are adjusted","Recipe","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980072","Bookmark Recipe: Bookmarks dropdown does not display more than 12 recipes","Bookmark","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980070","Search: No search results are returned when searching using ingredient keywords","Search","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980068","Mobile Issue: Bookmarks list in the mobile is not scrollable","Bookmark","Major","Resolved","Cannot Reproduce","2026-01-01","Forkify"],
+  ["QATC-980067","Form Field: Users cannot include commas in ingredient descriptions while adding ingredients","Form","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980066","Recipe Image: Recipes with invalid image URL should display a default placeholder image","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980064","Mobile issue: Bottom section of the Add Recipe page is not aligned consistently","Recipe","Major","Resolved","Cannot Reproduce","2026-01-01","Forkify"],
+  ["QATC-980063","Case-sensitive search issue: Recipes found with 'Beef' but not with 'beef'","Search","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980060","Delete Recipe: Users cannot remove recipes from the application once created","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980058","Mobile device UI: Bookmarked recipes cannot be reopened without refreshing the page","Bookmark","Major","Resolved","Cannot Reproduce","2026-01-01","Forkify"],
+  ["QATC-980056","Form Field: Prep Time and Servings fields accept excessively large numeric values","Form","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980055","Homepage: No option available to view all recipes in the application","Homepage","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980053","Homepage Navigation: No navigation option available to return to the homepage","Homepage","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980051","Bookmark Recipe: Newly added recipes are automatically added to bookmarks without user action","Bookmark","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980050","Add Recipe: Users see success popup instead of the Add Recipe form when adding another recipe","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980047","Add Recipe: Letters are accepted instead of integers in Quantity and Unit","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980044","Add Recipe: Users have to re-enter all information if ingredient format is incorrect","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980042","Add Recipe: Users cannot input more than 6 ingredients when creating a recipe","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980041","Search Field Placeholder: 'Search over 1,000,000 recipes...' is misleading for a personal recipe collection","Search","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980038","Add Recipe: Prep time and Servings fields accept negative and zero values","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980036","Recipe details page: The spelling of 'Minutes' changes dynamically when servings are adjusted","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980033","Add Recipe: URL and Image URL fields accept invalid inputs","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980031","Authentication: User Recipes Not Persisted Without Login System","Authentication","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980029","Form Field: Non-Numeric Values Allowed in Prep time & Servings (e.g., '4e')","Form","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980027","Dashboard: First Dashboard Text Suggests Searching to New Users Despite No Recipes","Dashboard","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980026","Header Logo: Header Logo is Not Clickable on Homepage","Header","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980020","Dashboard: Dashboard is scrollable on initial load even when no content is available","Dashboard","Major","Resolved","FAD","2026-01-01","Forkify"],
+  ["QATC-980016","Add Recipe: Placeholder 'Image Sourse URL' is displayed instead of 'Image Source URL'","Recipe","Major","Open","","2026-01-01","Forkify"],
+  ["QATC-980014","Search: Application Keeps Loading When Search Is Triggered with Empty Input","Search","Major","Open","","2026-01-01","Forkify"],
+  // Canteen
+  ["QATC-978593","Order Amount: Order amount displays more than two decimal places","Order","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978592","Account Balance: Account balance resets to the previous value after page refresh","Account","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978590","Mobile View: 'Start Again' option is not visible in mobile","Mobile","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978589","Menu item: One of the selected items remain checked after making an order","Menu","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978588","Tab title: Tab title is displayed 'Calllculation' instead of 'Calculation'","Tab","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978585","Menu Selection: Price of a specific menu item is not updated if checked (Thursday Salad)","Menu","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978584","Account Balance: Account balance increases instead of decreasing after making an order","Account","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978583","Menu Selection: Order history shows fewer items than selected","Menu","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-978582","Account Balance: Account balance changes even if no menu item is selected","Account","Major","Open","","2025-12-28","Canteen"],
+  ["QATC-977852","Order History: Debited amount shows integer value instead of decimal value","Order","Minor","Open","","2025-12-25","Canteen"],
+  ["QATC-977843","Order History: Debited amount is 50 rub less than total amount of order","Order","Major","Open","","2025-12-25","Canteen"],
+];
+
+// ── PARSE & ORGANIZE ──────────────────────────────────────────────────────────
+const bugs = rawBugs.map(r => ({
+  id: r[0], title: r[1], module: r[2], priority: r[3],
+  status: r[4], resolution: r[5], date: r[6], project: r[7]
+}));
+
+const projects = ["All", ...["Voicemail","Burgershop","GregOlsen","Forkify","Canteen"]];
+
+let activeProject = "All";
+let sortCol = "date";
+let sortDir = -1; // -1 desc, 1 asc
+
+// ── STATS BAR ─────────────────────────────────────────────────────────────────
+function renderStats(data) {
+  const total   = data.length;
+  const open    = data.filter(b => b.status === "Open").length;
+  const closed  = data.filter(b => b.status === "Closed").length;
+  const resolved= data.filter(b => b.status === "Resolved").length;
+  const tbr     = data.filter(b => b.status === "To Be Reformulated").length;
+  const projs   = new Set(data.map(b => b.project)).size;
+
+  document.getElementById("statsBar").innerHTML = [
+    [total,   "Total Bugs"],
+    [open,    "Open"],
+    [closed,  "Closed"],
+    [resolved,"Resolved"],
+    [tbr,     "To Reformulate"],
+    [projs,   "Projects"],
+  ].map(([n,l]) => `<div class="stat"><div class="num">${n}</div><div class="label">${l}</div></div>`).join("");
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function renderTabs() {
+  document.getElementById("tabsContainer").innerHTML = projects.map(p =>
+    `<div class="tab${p===activeProject?" active":""}" data-proj="${p}">${p === "All" ? "All Projects" : p}${p!=="All"?" ("+bugs.filter(b=>b.project===p).length+")":""}</div>`
+  ).join("");
+
+  document.querySelectorAll(".tab").forEach(t =>
+    t.addEventListener("click", () => {
+      activeProject = t.dataset.proj;
+      document.getElementById("searchInput").value = "";
+      document.getElementById("statusFilter").value = "";
+      document.getElementById("priorityFilter").value = "";
+      renderTabs();
+      renderTable();
+    })
+  );
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+function statusClass(s) {
+  if (s === "Open") return "status-open";
+  if (s === "Closed") return "status-closed";
+  if (s === "Resolved") return "status-resolved";
+  return "status-tbr";
+}
+
+function priorityClass(p) {
+  if (p === "Critical") return "priority-critical";
+  if (p === "Minor") return "priority-minor";
+  return "priority-major";
+}
+
+function renderTable() {
+  const search   = document.getElementById("searchInput").value.toLowerCase();
+  const statusF  = document.getElementById("statusFilter").value;
+  const priorityF= document.getElementById("priorityFilter").value;
+
+  let data = bugs.filter(b => {
+    if (activeProject !== "All" && b.project !== activeProject) return false;
+    if (statusF   && b.status   !== statusF)   return false;
+    if (priorityF && b.priority !== priorityF) return false;
+    if (search && !b.id.toLowerCase().includes(search) && !b.title.toLowerCase().includes(search) && !b.module.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  // sort
+  data.sort((a, b) => {
+    let av = a[sortCol] || "", bv = b[sortCol] || "";
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+
+  renderStats(activeProject === "All" ? bugs : bugs.filter(b => b.project === activeProject));
+  document.getElementById("resultCount").textContent = `${data.length} bug${data.length!==1?"s":""}`;
+
+  const tbody = document.getElementById("bugTableBody");
+  const empty = document.getElementById("emptyState");
+
+  if (data.length === 0) {
+    tbody.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+
+  empty.style.display = "none";
+  tbody.innerHTML = data.map(b => `
+    <tr>
+      <td><span class="bug-id">${b.id}</span></td>
+      <td><span class="bug-title">${b.title}</span></td>
+      <td><span class="bug-module">${b.module}</span></td>
+      <td><span class="priority-badge ${priorityClass(b.priority)}">${b.priority}</span></td>
+      <td><span class="status-badge ${statusClass(b.status)}">${b.status}</span></td>
+      <td><span class="bug-module">${b.resolution || "—"}</span></td>
+      <td><span class="date-cell">${b.date}</span></td>
+    </tr>
+  `).join("");
+}
+
+// ── SORT HEADERS ──────────────────────────────────────────────────────────────
+const colMap = { id:"id", title:"title", module:"module", priority:"priority", status:"status", resolution:"resolution", date:"date" };
+
+document.querySelectorAll("th[data-col]").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = 1; }
+    document.querySelectorAll("th").forEach(t => t.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortDir === 1 ? "↑" : "↓";
+    renderTable();
+  });
+});
+
+// ── FILTERS ───────────────────────────────────────────────────────────────────
+document.getElementById("searchInput").addEventListener("input", renderTable);
+document.getElementById("statusFilter").addEventListener("change", renderTable);
+document.getElementById("priorityFilter").addEventListener("change", renderTable);
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderTabs();
+renderTable();
+</script>
+</body>
+</html>
